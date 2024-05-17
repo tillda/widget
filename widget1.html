@@ -1,15 +1,34 @@
-<html>
-    <head>
-        <script>
-            var value = 123;
-        </script>
-        <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Price Fetcher</title>
+</head>
+<body>
+    <h1>Current Bitcoin Price</h1>
+    <div id="price">Fetching...</div>
 
-        </style>
-    </head>
-    <body>
-        <div id="content">
-            <script>document.write(value.toString());</script>
-        </div>
-    </body>
+    <script>
+        async function fetchBitcoinPrice() {
+            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const data = await response.json();
+                const price = data.bitcoin.usd;
+                document.getElementById('price').textContent = `$${price}`;
+            } catch (error) {
+                console.error('Error fetching Bitcoin price:', error);
+                document.getElementById('price').textContent = 'Error fetching price';
+            }
+        }
+
+        // Fetch Bitcoin price when the page loads
+        window.onload = fetchBitcoinPrice;
+    </script>
+</body>
 </html>
