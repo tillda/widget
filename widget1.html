@@ -6,10 +6,13 @@
     <title>Bitcoin Price Fetcher</title>
 </head>
 <body>
-    <h1>Current Bitcoin Price</h1>
     <div id="price">Fetching...</div>
-
     <script>
+        function getURLParameter(name) {
+            const url = window.location.href; // Get the current page URL
+            const params = new URL(url).searchParams; // Create a URLSearchParams object from the URL
+            return params.get(name); // Return the value of the specified parameter
+        }        
         async function fetchBitcoinPrice() {
             const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
 
